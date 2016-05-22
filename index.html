@@ -3,30 +3,75 @@
 <head>
 	<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	<script type="text/javascript">
-
-	window.onload = function () {
-		var chart = new CanvasJS.Chart("chart", {
-			title:{
-				text: "Multiculturalism in Canada"
-			},
-			data: [              
-			{
-				type: "pie",
-				dataPoints: [
-					{ label: "English",  y: 706369  },
-					{ label: "Irish", y: 846414  },
-					{ label: "Scottish", y: 549946  },
-					{ label: "Other British",  y: 7773  }
-				]
-			}
+		var chart;
+		var years = [ 1871, 1881 ];
+		var points = [
+			[
+				{ label: "French", y: 1082940 },
+				{ label: "Irish", y: 846414 },
+				{ label: "English", y: 706369 },
+				{ label: "Scottish", y: 549946 },
+				{ label: "German", y: 202991 },
+				{ label: "Netherlander", y: 29662 },
+				{ label: "Native Indian and Inuit", y: 23037 },
+				{ label: "Negro", y: 21496 },
+				{ label: "Other", y: 7909 },
+				{ label: "Other British", y: 7773 },
+				{ label: "Other European", y: 3791 },
+				{ label: "Scandinavian", y: 1623 },
+				{ label: "Italian", y: 1035 },
+				{ label: "Russian", y: 607 },
+				{ label: "Jewish", y: 125 },
+				{ label: "Greek", y: 39 },
+				{ label: "Other Asiatic", y: 4 }
+			],
+			[
+				{ label: "French", y: 1298929 },
+				{ label: "Irish", y: 957403 },
+				{ label: "English", y: 881301 },
+				{ label: "Scottish", y: 699863 },
+				{ label: "German", y: 254319 },
+				{ label: "Native Indian and Inuit", y: 108547 },
+				{ label: "Other", y: 62200 },
+				{ label: "Netherlander", y: 30412 },
+				{ label: "Negro", y: 21394 },
+				{ label: "Other British", y: 9947 },
+				{ label: "Other European", y: 5760 },
+				{ label: "Scandinavian", y: 5223 },
+				{ label: "Chinese", y: 4383 },
+				{ label: "Italian", y: 1849 },
+				{ label: "Russian", y: 1227 },
+				{ label: "Jewish", y: 667 }
 			]
-		});
-		chart.render();
-	}
+		];
+		window.onload = function() {
+			chart = new CanvasJS.Chart("chart", {
+				title: {
+					text: "Multiculturalism in Canada"
+				},
+				data: [{
+					type: "pie",
+					dataPoints: []
+				}]
+			});
+			update(0);
+		}
+
+		function update(n) {
+			if (n == points.length) {
+				n = 0;
+			}
+			chart.options.data[0].dataPoints = points[n];
+			chart.options.title.text = "Multiculturalism in Canada ("+years[n]+")";
+			chart.render();
+			setTimeout(function(){
+				update(n+1);
+			}, 2000);
+		}
 	</script>
 </head>
 <body>
-	<p>http://www.statcan.gc.ca/pub/11-516-x/pdf/5500092-eng.pdf Page 17</p>
+	<a href="http://www.statcan.gc.ca/pub/11-516-x/pdf/5500092-eng.pdf#page=17">http://www.statcan.gc.ca/pub/11-516-x/pdf/5500092-eng.pdf</a>
 	<div id="chart" style="height:800px"></div>
 </body>
 </html>
