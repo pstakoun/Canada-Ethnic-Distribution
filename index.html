@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script type="text/javascript">
+
+	window.onload = function () {
+		var chart = new CanvasJS.Chart("chart", {
+			title:{
+				text: "Multiculturalism in Canada"
+			},
+			data: [              
+			{
+				type: "pie",
+				dataPoints: [
+					{ label: "English",  y: 706369  },
+					{ label: "Irish", y: 846414  },
+					{ label: "Scottish", y: 549946  },
+					{ label: "Other British",  y: 7773  }
+				]
+			}
+			]
+		});
+		chart.render();
+	}
+	</script>
+</head>
+<body>
+	<p>http://www.statcan.gc.ca/pub/11-516-x/pdf/5500092-eng.pdf Page 17</p>
+	<div id="chart" style="height:800px"></div>
+</body>
+</html>
