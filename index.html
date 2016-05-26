@@ -3,9 +3,31 @@
 <head>
 	<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	<script type="text/javascript">
+		var customColorOffset = 96;
+		var stopped = false;
+		var interval = 1000;
+
+		function hash(str) {
+	    	var hash = 0;
+	    	for (var i = 0; i < str.length; i++) {
+	       		hash = str.charCodeAt(i) + customColorOffset + ((hash << 5) - hash);
+	    	}
+	    	return hash;
+		}
+
+		function toRGB(i) {
+    		var c = (i & 0x00FFFFFF).toString(16).toUpperCase();
+			return "00000".substring(0, 6 - c.length) + c;
+		}
+
+		function getColor(str) {
+			return "#"+toRGB(hash(str));
+		}
+
 		var chart;
-		var years = [ 1871, 1881 ];
+		var years = [ 1871, 1881, 1901, 1911, 1921, 1931, 1941, 1951, 1961, 1971, 2006 ];
 		var points = [
+			//1871
 			[
 				{ label: "French", y: 1082940 },
 				{ label: "Irish", y: 846414 },
@@ -15,7 +37,7 @@
 				{ label: "Netherlander", y: 29662 },
 				{ label: "Native Indian and Inuit", y: 23037 },
 				{ label: "Negro", y: 21496 },
-				{ label: "Other", y: 7909 },
+				{ label: "Other/Not Stated", y: 7909 },
 				{ label: "Other British", y: 7773 },
 				{ label: "Other European", y: 3791 },
 				{ label: "Scandinavian", y: 1623 },
@@ -25,6 +47,7 @@
 				{ label: "Greek", y: 39 },
 				{ label: "Other Asiatic", y: 4 }
 			],
+			//1881
 			[
 				{ label: "French", y: 1298929 },
 				{ label: "Irish", y: 957403 },
@@ -32,7 +55,7 @@
 				{ label: "Scottish", y: 699863 },
 				{ label: "German", y: 254319 },
 				{ label: "Native Indian and Inuit", y: 108547 },
-				{ label: "Other", y: 62200 },
+				{ label: "Other/Not Stated", y: 43586 },
 				{ label: "Netherlander", y: 30412 },
 				{ label: "Negro", y: 21394 },
 				{ label: "Other British", y: 9947 },
@@ -42,8 +65,323 @@
 				{ label: "Italian", y: 1849 },
 				{ label: "Russian", y: 1227 },
 				{ label: "Jewish", y: 667 }
-			]
+			],
+			//1901
+			[
+				{ label: "French", y: 1649371 },
+				{ label: "English", y: 1260899 },
+				{ label: "Irish", y: 988721 },
+				{ label: "Scottish", y: 800154 },
+				{ label: "German", y: 310501 },
+				{ label: "Native Indian and Inuit", y: 127941 },
+				{ label: "Netherlander", y: 33845 },
+				{ label: "Other/Not Stated", y: 31684 },
+				{ label: "Scandinavian", y: 31042 },
+				{ label: "Negro", y: 17437 },
+				{ label: "Russian", y: 19825 },
+				{ label: "Chinese", y: 17312 },
+				{ label: "Jewish", y: 16131 },
+				{ label: "Other British", y: 13421 },
+				{ label: "Austrian", y: 10947 },
+				{ label: "Italian", y: 10834 },
+				{ label: "Polish", y: 6285 },
+				{ label: "Ukrainian", y: 5682 },
+				{ label: "Other European", y: 5174 },
+				{ label: "Japanese", y: 4738 },
+				{ label: "Belgian", y: 2994 },
+				{ label: "Finnish", y: 2502 },
+				{ label: "Other Asiatic", y: 1681 },
+				{ label: "Hungarian", y: 1549 },
+				{ label: "Romanian", y: 354 },
+				{ label: "Greek", y: 291 }
+			],
+			//1911
+			[
+				{ label: "French", y: 2061719 },
+				{ label: "English", y: 1871268 },
+				{ label: "Irish", y: 1074738 },
+				{ label: "Scottish", y: 1027015 },
+				{ label: "German", y: 403417 },
+				{ label: "Scandinavian", y: 112682 },
+				{ label: "Native Indian and Inuit", y: 105611 },
+				{ label: "Jewish", y: 76199 },
+				{ label: "Ukrainian", y: 75432 },
+				{ label: "Netherlander", y: 55961 },
+				{ label: "Italian", y: 45963 },
+				{ label: "Russian", y: 44376 },
+				{ label: "Austrian", y: 44036 },
+				{ label: "Other/Not Stated", y: 35242 },
+				{ label: "Polish", y: 33652 },
+				{ label: "Chinese", y: 27831 },
+				{ label: "Other British", y: 26060 },
+				{ label: "Negro", y: 16994 },
+				{ label: "Finnish", y: 15500 },
+				{ label: "Hungarian", y: 11648 },
+				{ label: "Belgian", y: 9664 },
+				{ label: "Japanese", y: 9067 },
+				{ label: "Other European", y: 6756 },
+				{ label: "Other Asiatic", y: 6315 },
+				{ label: "Romanian", y: 5883 },
+				{ label: "Greek", y: 3614 }
+			],
+			//1921
+			[
+				{ label: "English", y: 2545358 },
+				{ label: "French", y: 2452743 },
+				{ label: "Scottish", y: 1173625 },
+				{ label: "Irish", y: 1107803 },
+				{ label: "German", y: 294635 },
+				{ label: "Scandinavian", y: 167359 },
+				{ label: "Jewish", y: 126196 },
+				{ label: "Netherlander", y: 117505 },
+				{ label: "Native Indian and Inuit", y: 113724 },
+				{ label: "Austrian", y: 107671 },
+				{ label: "Ukrainian", y: 106721 },
+				{ label: "Russian", y: 100064 },
+				{ label: "Norwegian", y: 68856 },
+				{ label: "Italian", y: 66769 },
+				{ label: "Swedish", y: 61503 },
+				{ label: "Other British", y: 41952 },
+				{ label: "Polish", y: 53403 },
+				{ label: "Chinese", y: 39587 },
+				{ label: "Finnish", y: 21494 },
+				{ label: "Other/Not Stated", y: 21436 },
+				{ label: "Danish", y: 21124 },
+				{ label: "Belgian", y: 20234 },
+				{ label: "Negro", y: 18291 },
+				{ label: "Other European", y: 17945 },
+				{ label: "Icelandic", y: 15876 },
+				{ label: "Japanese", y: 15868 },
+				{ label: "Romanian", y: 13470 },
+				{ label: "Hungarian", y: 13181 },
+				{ label: "Other Asiatic", y: 10459 },
+				{ label: "Czech and Slovak", y: 8840 },
+				{ label: "Greek", y: 5740 },
+				{ label: "Yugoslavic", y: 3906 },
+				{ label: "Lithuanian", y: 1970 }
+			],
+			//1931
+			[
+				{ label: "French", y: 2927990 },
+				{ label: "English", y: 2741419 },
+				{ label: "Scottish", y: 1346350 },
+				{ label: "Irish", y: 1230808 },
+				{ label: "German", y: 473544 },
+				{ label: "Scandinavian", y: 228049 },
+				{ label: "Ukrainian", y: 225113 },
+				{ label: "Jewish", y: 156726 },
+				{ label: "Netherlander", y: 148962 },
+				{ label: "Polish", y: 145503 },
+				{ label: "Native Indian and Inuit", y: 128890 },
+				{ label: "Italian", y: 98173 },
+				{ label: "Norwegian", y: 93243 },
+				{ label: "Russian", y: 88148 },
+				{ label: "Swedish", y: 81306 },
+				{ label: "Other British", y: 62494 },
+				{ label: "Austrian", y: 48639 },
+				{ label: "Chinese", y: 46519 },
+				{ label: "Finnish", y: 43885 },
+				{ label: "Hungarian", y: 40582 },
+				{ label: "Danish", y: 34118 },
+				{ label: "Czech and Slovak", y: 30401 },
+				{ label: "Romanian", y: 29056 },
+				{ label: "Belgian", y: 27585 },
+				{ label: "Japanese", y: 23342 },
+				{ label: "Negro", y: 19456 },
+				{ label: "Icelandic", y: 19382 },
+				{ label: "Yugoslavic", y: 16174 },
+				{ label: "Other Asiatic", y: 14687 },
+				{ label: "Other/Not Stated", y: 9579 },
+				{ label: "Greek", y: 9444 },
+				{ label: "Other European", y: 9392 },
+				{ label: "Lithuanian", y: 5876 }
+			],
+			//1941
+			[
+				{ label: "French", y: 3483038 },
+				{ label: "English", y: 2968402 },
+				{ label: "Scottish", y: 1403974 },
+				{ label: "Irish", y: 1267702 },
+				{ label: "German", y: 464682 },
+				{ label: "Ukrainian", y: 305929 },
+				{ label: "Scandinavian", y: 244603 },
+				{ label: "Netherlander", y: 212863 },
+				{ label: "Jewish", y: 170241 },
+				{ label: "Polish", y: 167485 },
+				{ label: "Native Indian and Inuit", y: 160937 },
+				{ label: "Italian", y: 112625 },
+				{ label: "Norwegian", y: 100718 },
+				{ label: "Swedish", y: 85396 },
+				{ label: "Russian", y: 83708 },
+				{ label: "Other British", y: 75826 },
+				{ label: "Hungarian", y: 54598 },
+				{ label: "Czech and Slovak", y: 42912 },
+				{ label: "Finnish", y: 41683 },
+				{ label: "Austrian", y: 37715 },
+				{ label: "Danish", y: 37439 },
+				{ label: "Chinese", y: 34627 },
+				{ label: "Belgian", y: 29711 },
+				{ label: "Romanian", y: 24689 },
+				{ label: "Japanese", y: 23149 },
+				{ label: "Negro", y: 22174 },
+				{ label: "Yugoslavic", y: 21214 },
+				{ label: "Icelandic", y: 21050 },
+				{ label: "Other Asiatic", y: 16288 },
+				{ label: "Greek", y: 11692 },
+				{ label: "Other European", y: 9787 },
+				{ label: "Lithuanian", y: 7789 },
+				{ label: "Other/Not Stated", y: 6612 }
+			],
+			//1951
+			[
+				{ label: "French", y: 4319167 },
+				{ label: "English", y: 3630344 },
+				{ label: "Scottish", y: 1547470 },
+				{ label: "Irish", y: 1439635 },
+				{ label: "German", y: 619995 },
+				{ label: "Ukrainian", y: 395043 },
+				{ label: "Scandinavian", y: 283024 },
+				{ label: "Netherlander", y: 264267 },
+				{ label: "Polish", y: 219845 },
+				{ label: "Jewish", y: 181670 },
+				{ label: "Other/Not Stated", y: 170401 },
+				{ label: "Native Indian and Inuit", y: 165607 },
+				{ label: "Italian", y: 152245 },
+				{ label: "Norwegian", y: 119266 },
+				{ label: "Swedish", y: 97780 },
+				{ label: "Other British", y: 92236 },
+				{ label: "Russian", y: 91279 },
+				{ label: "Czech and Slovak", y: 63959 },
+				{ label: "Hungarian", y: 60460 },
+				{ label: "Finnish", y: 43745 },
+				{ label: "Austrian", y: 32231 },
+				{ label: "Danish", y: 42671 },
+				{ label: "Other European", y: 35616 },
+				{ label: "Belgian", y: 35148 },
+				{ label: "Chinese", y: 32528 },
+				{ label: "Romanian", y: 23601 },
+				{ label: "Icelandic", y: 23307 },
+				{ label: "Japanese", y: 21663 },
+				{ label: "Yugoslavic", y: 21404 },
+				{ label: "Other Asiatic", y: 18636 },
+				{ label: "Negro", y: 18020 },
+				{ label: "Greek", y: 13966 },
+				{ label: "Lithuanian", y: 16224 }
+			],
+			//1961
+			[
+				{ label: "French", y: 5540346 },
+				{ label: "English", y: 4195175 },
+				{ label: "Scottish", y: 1902302 },
+				{ label: "Irish", y: 1753351 },
+				{ label: "German", y: 1049599 },
+				{ label: "Ukrainian", y: 473337 },
+				{ label: "Italian", y: 450351 },
+				{ label: "Netherlander", y: 429679 },
+				{ label: "Scandinavian", y: 386534 },
+				{ label: "Polish", y: 323517 },
+				{ label: "Other/Not Stated", y: 210382 },
+				{ label: "Jewish", y: 173344 },
+				{ label: "Native Indian and Inuit", y: 220121 },
+				{ label: "Norwegian", y: 148681 },
+				{ label: "Other British", y: 145841 },
+				{ label: "Hungarian", y: 126220 },
+				{ label: "Swedish", y: 121757 },
+				{ label: "Russian", y: 119168 },
+				{ label: "Austrian", y: 106535 },
+				{ label: "Other European", y: 88190 },
+				{ label: "Danish", y: 85473 },
+				{ label: "Czech and Slovak", y: 73061 },
+				{ label: "Yugoslavic", y: 68587 },
+				{ label: "Belgian", y: 61382 },
+				{ label: "Finnish", y: 59436 },
+				{ label: "Chinese", y: 58197 },
+				{ label: "Greek", y: 56475 },
+				{ label: "Romanian", y: 43805 },
+				{ label: "Other Asiatic", y: 34399 },
+				{ label: "Negro", y: 32127 },
+				{ label: "Icelandic", y: 30623 },
+				{ label: "Japanese", y: 29157 },
+				{ label: "Lithuanian", y: 27629 }
+			],
+			//1971
+			[
+				{ label: "British", y: 9624115 },
+				{ label: "French", y: 6180120 },
+				{ label: "German", y: 1317200 },
+				{ label: "Italian", y: 730820 },
+				{ label: "Ukrainian", y: 580660 },
+				{ label: "Netherlander", y: 425945 },
+				{ label: "Scandinavian", y: 384795 },
+				{ label: "Polish", y: 316430 },
+				{ label: "Native Indian and Inuit", y: 312760 },
+				{ label: "Jewish", y: 296945 },
+				{ label: "Other European", y: 194850 },
+				{ label: "Norwegian", y: 179290 },
+				{ label: "Other/Not Stated", y: 171645 },
+				{ label: "Hungarian", y: 131890 },
+				{ label: "Other Asiatic", y: 129460 },
+				{ label: "Greek", y: 124475 },
+				{ label: "Chinese", y: 118815 },
+				{ label: "Yugoslavic", y: 104955 },
+				{ label: "Swedish", y: 101870 },
+				{ label: "Russian", y: 64475 },
+				{ label: "Czech and Slovak", y: 81870 },
+				{ label: "Danish", y: 75725 },
+				{ label: "Finnish", y: 59215 },
+				{ label: "Belgian", y: 51135 },
+				{ label: "Austrian", y: 42120 },
+				{ label: "Japanese", y: 37260 },
+				{ label: "Negro", y: 34445 },
+				{ label: "Icelandic", y: 27905 },
+				{ label: "Romanian", y: 27375 },
+				{ label: "Lithuanian", y: 24535 }
+			],
+			//2006
+			[
+				{ label: "Canadian", y: 10066290 },
+				{ label: "English", y: 6570015 },
+				{ label: "French", y: 4941210 },
+				{ label: "Scottish", y: 4719850 },
+				{ label: "Irish", y: 4354155 },
+				{ label: "German", y: 3179425 },
+				{ label: "Italian", y: 1445335 },
+				{ label: "Chinese", y: 1346510 },
+				{ label: "Native Indian and Inuit", y: 1253615 },
+				{ label: "Ukrainian", y: 1209085 },
+				{ label: "Netherlander", y: 1035965 },
+				{ label: "Polish", y: 984565 },
+				{ label: "East Indian", y: 962665 },
+				{ label: "Russian", y: 500600 },
+				{ label: "Welsh", y: 440965 },
+				{ label: "Filipino", y: 436190 },
+				{ label: "Norwegian", y: 432515 },
+				{ label: "Portuguese", y: 410850 },
+				{ label: "Métis", y: 409065 },
+				{ label: "Other British", y: 403915 },
+				{ label: "Swedish", y: 334765 },
+				{ label: "Spanish", y: 325730 },
+				{ label: "American", y: 316350 },
+				{ label: "Hungarian", y: 315510 },
+				{ label: "Jewish", y: 315120 },
+				{ label: "Greek", y: 242685 },
+				{ label: "Jamaican", y: 231110 },
+				{ label: "Danish", y: 200035 },
+				{ label: "Austrain", y: 194255 },
+				{ label: "Romanian", y: 192170 },
+				{ label: "Vietnamese", y: 180125 },
+				{ label: "Belgian", y: 168910 },
+				{ label: "Lebanese", y: 165150 },
+				{ label: "Québécois", y: 146585 }
+			],
 		];
+
+		for (var i = 0; i < points.length; i++) {
+			for (var j = 0; j < points[i].length; j++) {
+			 	points[i][j].color = getColor(points[i][j].label);
+			}
+		}
+
 		window.onload = function() {
 			chart = new CanvasJS.Chart("chart", {
 				title: {
@@ -55,7 +393,20 @@
 					dataPoints: []
 				}]
 			});
+			started = true;
 			update(0);
+		}
+
+		function updateYear(newValue) {
+			document.getElementById("year").innerHTML = newValue;
+		}
+
+		function updateSlider(newValue) {
+			document.getElementById("year-slider").value = newValue;
+		}
+
+		function updateChart(newValue) {
+			updateStatic(newValue > 1891 ? (newValue - years[0]) / 10 - 1 : (newValue - years[0]) / 10);
 		}
 
 		function update(n) {
@@ -63,16 +414,45 @@
 				n = 0;
 			}
 			chart.options.data[0].dataPoints = points[n];
-			chart.options.title.text = "Multiculturalism in Canada ("+years[n]+")";
 			chart.render();
+			updateYear(years[n]);
+			updateSlider(years[n]);
 			setTimeout(function(){
-				update(n+1);
-			}, 2000);
+				if (!stopped) {
+					update(n+1);
+				}
+			}, interval);
+		}
+
+		function updateStatic(n) {
+			stop();
+			chart.options.data[0].dataPoints = points[n];
+			chart.render();
+			updateYear(years[n]);
+		}
+
+		function stop() {
+			stopped = true;
+		}
+
+		function start() {
+			if (stopped) {
+				stopped = false;
+				update(document.getElementById("year-slider").value == 1891 ? 1 : (document.getElementById("year-slider").value - years[0]) / 10);
+			}
 		}
 	</script>
 </head>
-<body>
-	<a href="http://www.statcan.gc.ca/pub/11-516-x/pdf/5500092-eng.pdf#page=17">http://www.statcan.gc.ca/pub/11-516-x/pdf/5500092-eng.pdf</a>
-	<div id="chart" style="height:800px"></div>
+<body style="text-align:center">
+	<h5>All data taken from <a href="http://www.statcan.gc.ca/pub/11-516-x/pdf/5500092-eng.pdf#page=17">http://www.statcan.gc.ca/pub/11-516-x/pdf/5500092-eng.pdf#page=17</a> and <a href="http://www12.statcan.ca/census-recensement/2006/dp-pd/hlt/97-562/pages/page.cfm?Lang=E&Geo=PR&Code=01&Table=2&Data=Count&StartRec=1&Sort=3&Display=All">http://www12.statcan.ca/census-recensement/2006/dp-pd/hlt/97-562/pages/page.cfm?Lang=E&Geo=PR&Code=01&Table=2&Data=Count&StartRec=1&Sort=3&Display=All</a></h5>
+	<div id="chart" style="height:500px"></div>
+	<button style="font-size:24px;padding:8px 16px;margin:32px" onclick="start()">Start</button>
+	<button style="font-size:24px;padding:8px 16px;margin:32px" onclick="stop()">Stop</button>
+	<br>
+	<input id="year-slider" style="width:50%" type="range" min="1871" max="1981" value="1871" step="10" oninput="updateChart(this.value)" onchange="updateChart(this.value)" />
+	<h1 id="year">1871</h1>
+	<h4>Additional Information:</h4>
+	<h5>There is no available data for 1891.</h5>
+	<h5>English, Irish, and Scottish are included in British for 1971.</h5>
 </body>
 </html>
